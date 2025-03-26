@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Список товаров</h1>
+<a th:href="@{create}">Создать новый товар</a>
 <table>
     <thead>
     <tr>
@@ -19,7 +20,7 @@
     <tr th:each="product : ${products}">
         <td th:text="${product.id}"></td>
         <td>
-            <a th:href="@{catalogue/products/{productId}(prodoctId = ${product.id})}" th:text="${product.title}"></a>
+            <a th:href="@{{productId}(productId = ${product.id})}" th:text="${product.title}"></a>
         </td>
     </tr>
     </tbody>

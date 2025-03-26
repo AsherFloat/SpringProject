@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Новый товар</title>
+</head>
+<body>
+<h1>Новый товар</h1>
+<a th:href="@{list}">Вернуться к списку товаров</a>
+<form method="post" th:action="@{create}">
+  <label>
+    Название: <br>
+    <input type="text" name="title">
+  </label>
+  <br>
+  <label>
+    Описание: <br>
+    <input type="text" name="details">
+  </label>
+  <button type="submit">Создать</button>
+</form>
+</body>
+</html>

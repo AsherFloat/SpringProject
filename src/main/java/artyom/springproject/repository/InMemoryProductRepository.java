@@ -3,11 +3,8 @@ package artyom.springproject.repository;
 import artyom.springproject.entity.Product;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
@@ -15,12 +12,26 @@ public class InMemoryProductRepository implements ProductRepository {
     private final List<Product> products = Collections.synchronizedList(new LinkedList<>());
 
     public InMemoryProductRepository() {
-        IntStream.range(1,4).
-                forEach(i -> this.products.add(new Product(i,"Title %d".formatted(i),"Description %d".formatted(i))));
+        IntStream.range(1, 4).
+                forEach(i -> this.products.add(new Product(i, "Title %d".formatted(i), "Description %d".formatted(i))));
     }
 
     @Override
     public List<Product> findAll() {
         return Collections.unmodifiableList(products);
+    }
+
+    @Override
+    public Product addProduct(Product product) {
+        product.setId(this.products.stream().max(Comparator.comparingInt(Product::getId))
+                .map(Product::getId)
+                .orElse(0) + 1);
+        this.products.add(product);
+        return product;
+    }
+
+    @Override
+    public Optional<Product> findById(Integer productId) {
+        return this.products.stream().filter(product -> product.getId().equals(productId)).findFirst();
     }
 }

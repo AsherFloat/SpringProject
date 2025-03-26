@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${product.title}]]</title>
+</head>
+<body>
+<h1 th:text="${product.title}"></h1>
+<a th:href="@{list}">Вернуться к списку товаров</a>
+<ul>
+  <li><strong>ID</strong>: <span th:text="${product.id}"></span></li>
+  <li><strong>TITLE</strong>: <span th:text="${product.title}"></span></li>
+  <li><strong>DETAILS</strong>: <span th:text="${product.details}"></span></li>
+</ul>
+</body>
+</html>
