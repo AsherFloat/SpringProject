@@ -4,17 +4,11 @@ import artyom.springproject.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
 
     private final List<Product> products = Collections.synchronizedList(new LinkedList<>());
-
-    public InMemoryProductRepository() {
-        IntStream.range(1, 4).
-                forEach(i -> this.products.add(new Product(i, "Title %d".formatted(i), "Description %d".formatted(i))));
-    }
 
     @Override
     public List<Product> findAll() {
@@ -33,5 +27,10 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public Optional<Product> findById(Integer productId) {
         return this.products.stream().filter(product -> product.getId().equals(productId)).findFirst();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        this.products.removeIf(product -> product.getId().equals(id));
     }
 }

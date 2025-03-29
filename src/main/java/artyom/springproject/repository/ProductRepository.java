@@ -11,4 +11,6 @@ public interface ProductRepository {
     Product addProduct(Product product);
 
     Optional<Product> findById(Integer productId);
+
+    void deleteById(Integer id);
 }

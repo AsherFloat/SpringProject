@@ -6,10 +6,7 @@ import artyom.springproject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,23 +18,17 @@ public class ProductsController {
     @GetMapping("list")
     public String listProducts(Model model) {
         model.addAttribute("products", this.productService.findAllProducts());
-        return "list";
+        return "catalogue/products/list";
     }
 
     @GetMapping("create")
     public String ProductAdd() {
-        return "newProduct";
+        return "catalogue/products/newProduct";
     }
 
     @PostMapping("create")
     public String createProduct(NewProductPayload payload) {
         Product product = this.productService.createProduct(payload.title(), payload.details());
-        return "redirect:list";
-    }
-
-    @GetMapping("{productId:\\d+}")
-    public String ProductDetail(@PathVariable("productId") int productId, Model model) {
-        model.addAttribute("product", this.productService.findProduct(productId).orElseThrow());
-        return "product";
+        return "redirect:%d".formatted(product.getId());
     }
 }
